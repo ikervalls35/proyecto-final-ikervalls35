@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+        <?import javafx.scene.layout.VBox?>
+        <?import javafx.scene.control.TableView?>
+        <?import javafx.scene.control.TableColumn?>
+        <?import javafx.scene.control.TextField?>
+        <?import javafx.scene.control.Button?>
+
+<VBox xmlns="http://javafx.com/javafx"
+      xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.tienda.controller.CategoriaController"
+      spacing="10" alignment="CENTER">
+
+<TableView fx:id="tabla" prefHeight="200">
+    <columns>
+        <TableColumn text="Nombre" fx:id="colNombre" prefWidth="150"/>
+        <TableColumn text="Descripción" fx:id="colDescripcion" prefWidth="200"/>
+    </columns>
+</TableView>
+
+<TextField fx:id="txtNombre" promptText="Nombre"/>
+<TextField fx:id="txtDescripcion" promptText="Descripción"/>
+
+<Button text="Guardar" onAction="#guardar"/>
+<Button text="Eliminar" onAction="#eliminar"/>
+
+</VBox>
