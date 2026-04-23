@@ -30,5 +30,6 @@
 
 <Button text="Guardar" onAction="#guardar"/>
 <Button text="Eliminar" onAction="#eliminar"/><Button text="Exportar CSV" onAction="#exportarCSV"/>
+    <Button text="Volver al menú" onAction="#volverMenu"/>
 
 </VBox>

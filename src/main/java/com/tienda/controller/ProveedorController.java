@@ -1,12 +1,21 @@
 package com.tienda.controller;
 
+import com.tienda.App;
 import com.tienda.entity.Proveedor;
 import com.tienda.service.ProveedorService;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import javafx.event.ActionEvent;
+import java.io.IOException;
 
 @Controller
 public class ProveedorController {
@@ -49,5 +58,9 @@ public class ProveedorController {
             service.delete(seleccionado.getId());
             tabla.getItems().setAll(service.findAll());
         }
+    }
+    @FXML
+    private void volverMenu(ActionEvent event) throws Exception {
+        App.setRoot("main-view");
     }
 }
