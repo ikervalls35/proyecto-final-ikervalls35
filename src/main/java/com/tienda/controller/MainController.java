@@ -8,17 +8,18 @@ import org.springframework.stereotype.Controller;
 public class MainController {
 
     @FXML
-    private void abrirProductos(ActionEvent e) throws Exception {
+    private void abrirProductos() throws Exception {
         App.setRoot("productos-view");
     }
 
+
     @FXML
-    private void abrirCategorias(ActionEvent e) throws Exception {
+    private void abrirCategorias() throws Exception {
         App.setRoot("categorias-view");
     }
 
     @FXML
-    private void abrirProveedores(ActionEvent e) throws Exception {
+    private void abrirProveedores() throws Exception {
         App.setRoot("proveedores-view");
     }
 }

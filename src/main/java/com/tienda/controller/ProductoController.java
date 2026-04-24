@@ -1,4 +1,5 @@
 package com.tienda.controller;
+import com.tienda.App;
 import com.tienda.entity.Categoria;
 import com.tienda.entity.Proveedor;
 import com.tienda.entity.Producto;
@@ -9,10 +10,19 @@ import com.tienda.api.ApiService;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+
+import javafx.event.ActionEvent;
 import java.io.FileWriter;
+import java.io.IOException;
+
 @Controller
 public class ProductoController {
 
@@ -55,23 +65,39 @@ public class ProductoController {
         comboCategoria.getItems().setAll(categoriaService.findAll());
         comboProveedor.getItems().setAll(proveedorService.findAll());
     }
-    @FXML
+   @FXML
     private void guardar() {
-        Producto p = new Producto();
-        p.setNombre(txtNombre.getText());
-        p.setPrecio(Double.parseDouble(txtPrecio.getText()));
-        p.setStock(Integer.parseInt(txtStock.getText()));
 
-        p.setCategoria(comboCategoria.getValue());
-        p.setProveedor(comboProveedor.getValue());
+        if (txtNombre.getText().isEmpty() ||
+                txtPrecio.getText().isEmpty() ||
+                txtStock.getText().isEmpty() ||
+                comboCategoria.getValue() == null ||
+                comboProveedor.getValue() == null) {
 
-        double precioUSD = apiService.convertirEuroADolar(p.getPrecio());
-        System.out.println("Precio en USD: " + precioUSD);
+            Alert a = new Alert(Alert.AlertType.WARNING, "Rellena todos los campos.");
+            a.show();
+            return;
+        }
 
-        service.save(p);
-        tabla.getItems().setAll(service.findAll());
+        try {
+            Producto p = new Producto();
+            p.setNombre(txtNombre.getText());
+            p.setPrecio(Double.parseDouble(txtPrecio.getText()));
+            p.setStock(Integer.parseInt(txtStock.getText()));
+            p.setCategoria(comboCategoria.getValue());
+            p.setProveedor(comboProveedor.getValue());
+
+            double precioUSD = apiService.convertirEuroADolar(p.getPrecio());
+            System.out.println("Precio en USD: " + precioUSD);
+
+            service.save(p);
+            tabla.getItems().setAll(service.findAll());
+
+        } catch (NumberFormatException e) {
+            Alert a = new Alert(Alert.AlertType.ERROR, "Precio o stock no son válidos.");
+            a.show();
+        }
     }
-
     @FXML
     private void eliminar() {
         Producto seleccionado = tabla.getSelectionModel().getSelectedItem();
@@ -104,5 +130,9 @@ public class ProductoController {
             Alert a = new Alert(Alert.AlertType.ERROR, "Error al generar CSV.");
             a.show();
         }
+    }
+    @FXML
+    private void volverMenu(ActionEvent event) throws Exception {
+        App.setRoot("main-view");
     }
 }
