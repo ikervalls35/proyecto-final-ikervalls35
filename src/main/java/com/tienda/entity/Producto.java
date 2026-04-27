@@ -33,7 +33,7 @@ public class Producto implements Comparable<Producto> {
         this.stock = stock;
         this.categoria = categoria;
         this.proveedor = proveedor;
-        this.activo = true;
+        this.activo = stock > 0;
     }
 
     public Long getId() {
@@ -62,6 +62,7 @@ public class Producto implements Comparable<Producto> {
 
     public void setStock(int stock) {
         this.stock = stock;
+        this.activo = stock > 0;
     }
 
     public boolean isActivo() {
